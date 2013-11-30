@@ -4,14 +4,15 @@
 
   <groupId>com.cloudera.science</groupId>
   <artifactId>branchreduce</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <packaging>jar</packaging>
 
   <name>branchreduce</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <hadoop.version>2.0.0-cdh4.1.3</hadoop.version>
+    <hadoop.version>2.2.0</hadoop.version>
+    <kitten.version>0.2.0</kitten.version>
   </properties>
 
   <dependencies>
@@ -31,13 +32,13 @@
     <dependency>
       <groupId>com.cloudera.kitten</groupId>
       <artifactId>kitten-master</artifactId>
-      <version>0.1.0</version>
+      <version>${kitten.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.cloudera.kitten</groupId>
       <artifactId>kitten-client</artifactId>
-      <version>0.1.0</version>
+      <version>${kitten.version}</version>
     </dependency>
 
     <dependency>

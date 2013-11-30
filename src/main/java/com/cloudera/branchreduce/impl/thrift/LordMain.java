@@ -46,8 +46,6 @@ public class LordMain extends Configured implements Tool {
   
   private static final Log LOG = LogFactory.getLog(LordMain.class);
   
-  private String hostname;
-  private ServerSocket socket;
   private int numVassals;
   
   private BranchReduceJob job;
@@ -56,8 +54,6 @@ public class LordMain extends Configured implements Tool {
   private List initialTasks;
   
   private void initialize(String[] args) throws Exception {
-    this.hostname = InetAddress.getLocalHost().getHostName();
-    this.socket = new ServerSocket(0);
     this.numVassals = Integer.valueOf(args[0]);
     this.job = new BranchReduceJob(false, getConf());
     createInitialTasks();
@@ -96,12 +92,13 @@ public class LordMain extends Configured implements Tool {
     LOG.info("Initializing lord...");
     initialize(args);
     LOG.info("Lord initialized.");
-    
+
+    String hostname = InetAddress.getLocalHost().getHostName();
+    ServerSocket socket = new ServerSocket(0);
     ApplicationMasterParameters appMasterParams = new LuaApplicationMasterParameters(getConf(),
-        ImmutableMap.<String, Object>of("MASTER_HOSTNAME", hostname, "MASTER_PORT", socket.getLocalPort()))
-    .setClientPort(socket.getLocalPort())
-    .setHostname(hostname);
-    ApplicationMasterService appMasterService = new ApplicationMasterServiceImpl(appMasterParams);
+        ImmutableMap.<String, Object>of("MASTER_HOSTNAME", hostname, "MASTER_PORT", socket.getLocalPort()));
+    appMasterParams.setTrackingUrl(String.format("%s:%d", hostname, socket.getLocalPort()));
+    ApplicationMasterService appMasterService = new ApplicationMasterServiceImpl(appMasterParams, getConf());
     LOG.info("Starting application master service");
     appMasterService.startAndWait();
     

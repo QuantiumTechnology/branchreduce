@@ -99,7 +99,7 @@ public class Client extends KittenClient {
         }
         LOG.info(value);
       }
-      Thread.sleep(1000);
+      Thread.sleep(3000);
     }
     
     clientService.stopAndWait();

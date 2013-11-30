@@ -46,6 +46,7 @@ public class ClientTest {
           1, 1, 1);
       yarnCluster.init(conf);
       yarnCluster.start();
+      conf = yarnCluster.getConfig();
     }
     try {
       Thread.sleep(2000);
