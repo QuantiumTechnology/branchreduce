@@ -23,8 +23,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.yarn.server.MiniYARNCluster;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.cloudera.branchreduce.onezero.CurrentBestSolution;
@@ -34,11 +34,11 @@ import com.google.common.io.ByteStreams;
 public class ClientTest {
   private static final Log LOG = LogFactory.getLog(ClientTest.class);
   
-  protected static MiniYARNCluster yarnCluster = null;
-  protected static Configuration conf = new Configuration();
+  protected MiniYARNCluster yarnCluster = null;
+  protected Configuration conf = new Configuration();
 
-  @BeforeClass
-  public static void setup() throws InterruptedException, IOException {
+  @Before
+  public void setup() throws InterruptedException, IOException {
     conf.setInt("yarn.scheduler.fifo.minimum-allocation-mb", 128);
     conf.set("yarn.nodemanager.vmem-pmem-ratio", "20.0");
     if (yarnCluster == null) {
@@ -55,8 +55,8 @@ public class ClientTest {
     }   
   }
 
-  @AfterClass
-  public static void tearDown() throws IOException {
+  @After
+  public void tearDown() throws IOException {
     if (yarnCluster != null) {
       yarnCluster.stop();
       yarnCluster = null;
